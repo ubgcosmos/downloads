@@ -28,6 +28,7 @@ header {
   background: var(--header);
   padding: 8px 10px;
   backdrop-filter: blur(6px);
+  flex-wrap: wrap;
 }
 header button {
   background: rgba(255, 255, 255, 0.1);
@@ -47,7 +48,6 @@ header button:hover { background: rgba(255,255,255,0.2); }
   background: rgba(255, 255, 255, 0.1);
   color: #ccc;
   pointer-events: none;
-  value: "";
 }
 iframe {
   flex: 1;
@@ -133,6 +133,9 @@ button.ghost:hover { background: #777; }
   <button id="homeBtn">🏠 Home</button>
   <button id="gamesBtn">🎮 Games</button>
   <button id="proxyBtn">🌐 Proxy</button>
+  <button id="sineriderBtn">🧠 Sinerider</button>
+  <button id="gameboyBtn">🕹️ Gameboy</button>
+  <button id="darkroomBtn">🌑 A Dark Room</button>
   <input id="urlBar" readonly placeholder="">
 </header>
 
@@ -150,7 +153,7 @@ button.ghost:hover { background: #777; }
 <div id="welcomeModal" class="modalWindow">
   <h2>Welcome!</h2>
   <p>i know ur just trying to kill time in class</p>
-  <a href="https://docs.google.com/forms/d/1c7f0hO5fvGCyuryB6zdWQBRGHU5Gt9hjaCqJC7rI57A/edit">but before you go please give suggestions to this browser</a>
+  <a href="https://docs.google.com/forms/d/1c7f0hO5fvGCyuryB6zdWQBRGHU5Gt9hjaCqJC7rI57A/edit" target="_blank">but before you go please give suggestions to this browser</a>
   <button class="primary" onclick="closeWelcome()">lets go!</button>
 </div>
 
@@ -167,13 +170,20 @@ const allowedDomain = "https://ethanytangcodes.github.io";
 const homepage = allowedDomain + "/index.html";
 const gamesPage = allowedDomain + "/art";
 const proxyPage = allowedDomain + "/active";
+const sineriderPage = allowedDomain + "/sinerider";
+const gameboyPage = allowedDomain + "/gamebois";
+const darkroomPage = allowedDomain + "/text-game";
 const workerURL = "https://browserupdate.ethantytang11.workers.dev/version";
-const currentVersion = "1.0.1";
+const currentVersion = "1.0.2";
 
 const webFrame = document.getElementById("webFrame");
 const urlBar = document.getElementById("urlBar");
 const homeBtn = document.getElementById("homeBtn");
 const gamesBtn = document.getElementById("gamesBtn");
+const proxyBtn = document.getElementById("proxyBtn");
+const sineriderBtn = document.getElementById("sineriderBtn");
+const gameboyBtn = document.getElementById("gameboyBtn");
+const darkroomBtn = document.getElementById("darkroomBtn");
 const loadingOverlay = document.getElementById("loadingOverlay");
 const loadingText = document.getElementById("loadingText");
 
@@ -188,8 +198,16 @@ const updateButtons = document.getElementById("updateButtons");
 function showLoading(text="Loading…"){ loadingText.textContent=text; loadingOverlay.classList.add("active"); }
 function hideLoading(){ loadingOverlay.classList.remove("active"); }
 
-function sanitizeUrl(url){ try { const u = new URL(url, homepage); if(u.origin===new URL(allowedDomain).origin) return u.href; return homepage; } catch{ return homepage; } }
-function updateUrlBarUI(url){ urlBar.value = ""; } // Keep search bar blank
+function sanitizeUrl(url){ 
+  try { 
+    const u = new URL(url, homepage); 
+    if(u.origin===new URL(allowedDomain).origin) return u.href; 
+    return homepage; 
+  } catch { 
+    return homepage; 
+  } 
+}
+function updateUrlBarUI(url){ urlBar.value = ""; } // search bar stays blank
 
 function loadPage(url){
   const clean = sanitizeUrl(url);
@@ -200,6 +218,9 @@ function loadPage(url){
 homeBtn.addEventListener("click", ()=>loadPage(homepage));
 gamesBtn.addEventListener("click", ()=>loadPage(gamesPage));
 proxyBtn.addEventListener("click", ()=>loadPage(proxyPage));
+sineriderBtn.addEventListener("click", ()=>loadPage(sineriderPage));
+gameboyBtn.addEventListener("click", ()=>loadPage(gameboyPage));
+darkroomBtn.addEventListener("click", ()=>loadPage(darkroomPage));
 webFrame.addEventListener("load", ()=>hideLoading());
 
 function showWelcome(){ welcomeBackdrop.style.display="block"; welcomeModal.style.display="block"; }
