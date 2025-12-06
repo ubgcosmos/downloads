@@ -1,261 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>downloads</title>
-  <style>
-    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap");
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Downloads – Cosmos</title>
+
+<style>
+    :root {
+        --bg: #0a0a0f;
+        --card: #14141a;
+        --subtext: #b3b3b3;
+        --radius: 14px;
+    }
 
     * {
-      box-sizing: border-box;
-      font-family: "Poppins", sans-serif;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Inter", system-ui, sans-serif;
+        color: white;
     }
 
     body {
-      margin: 0;
-      padding: 2rem;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      background: radial-gradient(circle at top left, #4f46e5, #9333ea, #111);
-      color: #fff;
-      overflow-x: hidden;
+        background: var(--bg);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-      background: linear-gradient(90deg, #a78bfa, #c084fc, #f472b6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-align: center;
-      letter-spacing: 1px;
-      animation: glow 2s ease-in-out infinite alternate;
+    /* Top bar */
+    .topbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        height: 54px;
+        background: rgba(20,20,26,0.6);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255,255,255,0.07);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 15px;
     }
 
-    @keyframes glow {
-      from {
-        text-shadow: 0 0 10px #c084fc, 0 0 20px #a78bfa;
-      }
-      to {
-        text-shadow: 0 0 20px #f472b6, 0 0 40px #c084fc;
-      }
+    /* Page center */
+    .center {
+        margin-top: 120px;
+        text-align: center;
     }
 
+    .center h1 {
+        font-size: 36px;
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+
+    .center p {
+        color: var(--subtext);
+        font-size: 14px;
+        margin-bottom: 4px;
+    }
+
+    /* Search bar */
     .search-container {
-      position: relative;
-      margin: 1.5rem 0 2rem 0;
-      width: 100%;
-      max-width: 600px;
+        margin-top: 30px;
+        width: 90%;
+        max-width: 600px;
     }
 
-    input[type="text"] {
-      width: 100%;
-      padding: 1rem 1.2rem;
-      border-radius: 1rem;
-      border: none;
-      outline: none;
-      font-size: 1rem;
-      color: #fff;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(12px);
-      transition: all 0.3s ease;
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+    #search {
+        width: 100%;
+        background: #1a1a20;
+        border: 1px solid rgba(255,255,255,0.08);
+        padding: 12px 14px;
+        border-radius: var(--radius);
+        outline: none;
+        color: white;
     }
 
-    input[type="text"]:focus {
-      background: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
-      transform: scale(1.02);
+    /* Grid */
+    .grid {
+        margin-top: 30px;
+        width: 90%;
+        max-width: 1000px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 16px;
     }
 
-    input[type="text"]::placeholder {
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    .file-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.2rem;
-      width: 100%;
-      max-width: 1000px;
-    }
-
-    .file-card {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 1.2rem;
-      padding: 1.4rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .file-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 200%;
-      height: 100%;
-      background: linear-gradient(
-        120deg,
-        transparent,
-        rgba(255, 255, 255, 0.15),
-        transparent
-      );
-      transition: 0.5s;
-    }
-
-    .file-card:hover::before {
-      left: 100%;
-    }
-
-    .file-card:hover {
-      transform: translateY(-6px) scale(1.02);
-      background: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    .card {
+        background: var(--card);
+        border-radius: var(--radius);
+        padding: 18px;
+        border: 1px solid rgba(255,255,255,0.05);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
 
     .file-name {
-      font-weight: 600;
-      font-size: 1.05rem;
-      text-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+        font-size: 16px;
+        font-weight: 600;
     }
 
-    button {
-      background: linear-gradient(135deg, #a78bfa, #c084fc, #f472b6);
-      color: #fff;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    .btn {
+        background: #1f1f25;
+        border: 1px solid rgba(255,255,255,0.07);
+        padding: 8px 12px;
+        border-radius: 10px;
+        text-align: center;
+        font-size: 14px;
+        color: var(--subtext);
+        cursor: pointer;
+        text-decoration: none;
     }
 
-    button:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 20px rgba(240, 171, 252, 0.4);
+    .btn:hover {
+        background: #23232a;
     }
 
     .no-results {
-      text-align: center;
-      margin-top: 2rem;
-      font-size: 1.2rem;
-      opacity: 0.8;
-      animation: fadeIn 0.3s ease-in;
+        margin-top: 20px;
+        font-size: 15px;
+        color: var(--subtext);
+        display: none;
     }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
-
-    footer {
-      margin-top: auto;
-      padding: 2rem;
-      text-align: center;
-      font-size: 0.9rem;
-      opacity: 0.6;
-    }
-
-    footer:hover {
-      opacity: 1;
-      transition: 0.3s;
-    }
-  </style>
+</style>
 </head>
+
 <body>
-  <h1>downloads</h1>
-  <p>dont worry its not a virus</p>
-  <p>by downloading you agree to the terms of service</p>
-  <p>pro tip: downloading lets you bypass Securly classroom 👀</p>
-  <p>use wisely!</p>
-  <h3>please suggest games</h3>
-  <a href="https://forms.gle/UzH7pZW91GNKVX8U8">suggest games here</a>
 
-  <div class="search-container">
-    <input type="text" id="search" placeholder="search files" />
-  </div>
+    <div class="topbar">Downloads</div>
 
-  <div class="file-list" id="fileList">
-    <div class="file-card">
-      <div class="file-name">retro bowl</div>
-      <button data-link="https://raw.githubusercontent.com/ethanytangcodes/download/refs/heads/main/files/retrobowl.html">Download</button>
+    <div class="center">
+        <h1>Downloads</h1>
+        <p>Files available for offline use</p>
     </div>
-    <div class="file-card">
-      <div class="file-name">my site(but it cant be seen on securly!)</div>
-      <button data-link="https://raw.githubusercontent.com/ethanytangcodes/download/refs/heads/main/files/browser.html">Download</button>
+
+    <div class="search-container">
+        <input id="search" type="text" placeholder="Search downloads...">
     </div>
-    <div class="file-card">
-      <div class="file-name">vault is back</div>
-      <button data-link="https://raw.githubusercontent.com/ethanytangcodes/download/refs/heads/main/files/vault.html">Download</button>
+
+    <div class="grid" id="fileList">
+
+        <div class="card">
+            <div class="file-name">Retro Bowl</div>
+            <a class="btn" data-link="https://raw.githubusercontent.com/ubgcosmos/download/refs/heads/main/files/retrobowl.html">Download</a>
+        </div>
+
+        <div class="card">
+            <div class="file-name">My Site (securly classroom cant see)</div>
+            <a class="btn" data-link="https://raw.githubusercontent.com/ubgcosmos/download/refs/heads/main/files/browser.html">Download</a>
+        </div>
+
+        <div class="card">
+            <div class="file-name">Vault Is Back</div>
+            <a class="btn" data-link="https://raw.githubusercontent.com/ubgcosmos/download/refs/heads/main/files/vault.html">Download</a>
+        </div>
+
     </div>
-  </div>
 
-  <p id="noResults" class="no-results" style="display:none;">No matching files found</p>
+    <div id="noResults" class="no-results">No files found.</div>
 
-  <footer>Built by Ethan Tang</footer>
-
-  <script>
-    // Force download behavior
-    document.querySelectorAll("button").forEach(btn => {
-      btn.addEventListener("click", async () => {
-        const fileUrl = btn.dataset.link;
-        const fileName = fileUrl.split("/").pop();
+<script>
+/* Download buttons */
+document.querySelectorAll(".btn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+        const url = btn.dataset.link;
+        const name = url.split("/").pop();
 
         try {
-          const response = await fetch(fileUrl);
-          const blob = await response.blob();
-          const url = window.URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = fileName;
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          window.URL.revokeObjectURL(url);
-        } catch (err) {
-          alert("❌ Failed to download file: " + err.message);
+            const response = await fetch(url);
+            const blob = await response.blob();
+            const obj = URL.createObjectURL(blob);
+
+            const a = document.createElement("a");
+            a.href = obj;
+            a.download = name;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(obj);
+
+        } catch (e) {
+            alert("Failed to download file.");
         }
-      });
     });
+});
 
-    // Search filter
-    const searchInput = document.getElementById("search");
-    const fileCards = document.querySelectorAll(".file-card");
-    const noResults = document.getElementById("noResults");
+/* Search system */
+const search = document.getElementById("search");
+const cards = document.querySelectorAll(".card");
+const noResults = document.getElementById("noResults");
 
-    searchInput.addEventListener("input", () => {
-      const query = searchInput.value.toLowerCase();
-      let visibleCount = 0;
+search.addEventListener("input", () => {
+    let q = search.value.toLowerCase();
+    let count = 0;
 
-      fileCards.forEach(card => {
+    cards.forEach(card => {
         const name = card.querySelector(".file-name").textContent.toLowerCase();
-        if (name.includes(query)) {
-          card.style.display = "flex";
-          visibleCount++;
+        if (name.includes(q)) {
+            card.style.display = "flex";
+            count++;
         } else {
-          card.style.display = "none";
+            card.style.display = "none";
         }
-      });
-
-      noResults.style.display = visibleCount === 0 ? "block" : "none";
     });
-  </script>
+
+    noResults.style.display = count === 0 ? "block" : "none";
+});
+</script>
+
 </body>
 </html>
